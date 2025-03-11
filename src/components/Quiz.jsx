@@ -13,7 +13,7 @@ function Quiz() {
   const [timeLeft, setTimeLeft] = useState(0);
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
-
+ const [isLoading, setIsLoading] = useState(false);
   // Fetch questions and initialize timer
   useEffect(() => {
     const fetchQuestions = async () => {
@@ -75,6 +75,7 @@ function Quiz() {
 
   // Handle quiz submission
   const handleSubmit = async (latestAnswers) => {
+    setIsLoading(true);
     console.log("Handle submit function");
     try {
       const token = localStorage.getItem("usertoken");
@@ -120,7 +121,9 @@ function Quiz() {
       localStorage.removeItem("usertoken");
       localStorage.removeItem("quizTimeLeft");
       localStorage.removeItem("quizAnswers");
+      setIsLoading(false);
       navigate("/thankyou");
+
     } catch (error) {
       console.error("Error submitting quiz:", error);
     }
@@ -152,7 +155,19 @@ function Quiz() {
           onClick={() => handleSubmit(answers)} // Pass latest answers on manual submit
           className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
         >
-          Submit Quiz
+          {/* Submit Quiz */}
+          
+          {isLoading ? (
+              <div className="flex items-center">
+                <svg className="animate-spin h-5 w-5 mr-3 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                submitting ..
+              </div>
+            ) : (
+              "Submit"
+            )}
         </button>
       </div>
 
