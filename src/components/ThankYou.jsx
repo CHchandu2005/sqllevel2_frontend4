@@ -30,6 +30,8 @@ function ThankYou() {
         🎉 Thank You for Completing the Quiz! 🎉
       </h2>
       <p className="mt-4 text-lg text-gray-400">Your responses have been submitted successfully.</p>
+      <p>Results will be announced soon.</p>
+      <p>Check your emails for updates.</p>
       <p className="mt-6 text-2xl font-semibold text-red-400">
         Redirecting in <span className="text-yellow-300">{countdown}</span> seconds...
       </p>
